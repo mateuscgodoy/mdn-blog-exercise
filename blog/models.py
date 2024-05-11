@@ -5,7 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.username
 
 
 class Author(models.Model):
@@ -25,7 +26,7 @@ class Author(models.Model):
         ordering = ["writes_since", "user"]
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class Blog(models.Model):
