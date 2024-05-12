@@ -1,14 +1,7 @@
-import datetime
-import pytz
-
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.db.utils import IntegrityError
 
-# The user model used is the default implement by Django
-User = get_user_model()
-
-from blog.models import Author, Blog
+from blog.models import Author, Blog, Comment, User
 
 
 class AuthorModelTest(TestCase):
@@ -98,6 +91,52 @@ class BlogModelTest(TestCase):
         expected = f"{title} - {blog.created_at}"
         self.assertEqual(str(blog), expected)
 
+    def test_only_authors_can_create_blogs(self):
+        with self.assertRaises(expected_exception=ValueError):
+            regular_user = User.objects.create(
+                username="notAnAuthor", password="dj23dD@@#dda2"
+            )
+            Blog.objects.create(author=regular_user)
+
     def test_raises_when_blog_has_no_author(self):
         with self.assertRaises(expected_exception=IntegrityError):
             Blog.objects.create()
+
+
+class CommentModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user = User.objects.create(username="testuser1", password="1X<ISRUkw+tuK")
+        author = Author.objects.create(user=user)
+        Blog.objects.create(title="A nice blog", author=author)
+
+    def test_content_label(self):
+        user = User.objects.first()
+        blog = Blog.objects.first()
+        comment = Comment.objects.create(creator=user, blog=blog)
+        content_label = comment._meta.get_field("content").verbose_name
+        self.assertEqual(content_label, "content")
+
+    def test_content_max_length(self):
+        user = User.objects.first()
+        blog = Blog.objects.first()
+        comment = Comment.objects.create(creator=user, blog=blog)
+        max_length = comment._meta.get_field("content").max_length
+        self.assertEqual(max_length, 1000)
+
+    def test_content_help_text(self):
+        user = User.objects.first()
+        blog = Blog.objects.first()
+        comment = Comment.objects.create(creator=user, blog=blog)
+        help_text = comment._meta.get_field("content").help_text
+        self.assertEqual(
+            help_text,
+            "Remember to be respectful and polite towards other users. Hateful comments might result in account termination.",
+        )
+
+    def test_comment_to_string(self):
+        user = User.objects.first()
+        blog = Blog.objects.first()
+        comment = Comment.objects.create(creator=user, blog=blog)
+        expected = f"Comment by {user} ({comment.created_at})"
+        self.assertEqual(str(comment), expected)
