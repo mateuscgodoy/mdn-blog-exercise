@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "blog/layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-</head>
+{%block title%}
+Blogs
+{%endblock%}
 
-<body>
-    <h1>Super blog</h1>
-    <p>The super blog is officially loaded and ready to start working. 👍</p>
-</body>
-
-</html>
+{%block content%}
+<h1>Super blog</h1>
+<p>The super blog is officially loaded and ready to start working. 👍</p>
+<p>Now loading from Layout!</p>
+{%endblock%}
