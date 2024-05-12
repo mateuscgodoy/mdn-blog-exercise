@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "blog/layout.html" %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-</head>
+{%block title%}
+Blog Fiesta - Homepage
+{%endblock%}
 
-<body>
-    <h1>Super blog</h1>
-    <p>The super blog is officially loaded and ready to start working. 👍</p>
-</body>
-
-</html>
+{%block content%}
+<h1>Blog Fiesta</h1>
+<p>This simple application was created as a practice using Django to set a web application.</p>
+<p>Therefore it's fairly simple with small number of features.</p>
+<ul>
+    <li>Users can read blog posts;</li>
+    <li>Registered users may write new
+        ones or comment on them.</li>
+</ul>
+<p>That's pretty much it for now. Hope you like it and thank you for checking it out! 🥳</p>
+<h6>This demo project was developed by Mateus Colombo Godoy! Find me on
+    <a href="https://github.com/mateuscgodoy" target="_blank" rel="noopener noreferrer"><img
+            src="{%static 'github.svg'%}" alt="GitHub logo">GitHub</a>.
+</h6>
+<p><em>P.S. if you also want to learn more about Django or access this exercise checkout this <a
+            href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/django_assessment_blog"
+            target="_blank" rel="noopener noreferrer">link from MDN</a>!</em></p>
+{%endblock%}
