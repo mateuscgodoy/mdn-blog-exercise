@@ -20,7 +20,7 @@ class Author(models.Model):
         default="Author has not set any bio information yet.",
         max_length=1000,
     )
-    writes_since = models.DateField(auto_now_add=True)
+    writes_since = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["writes_since", "user"]
@@ -43,8 +43,8 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["created_at", "title"]
-        get_latest_by = "created_at"
+        ordering = ["-created_at", "title"]
+        get_latest_by = "-created_at"
 
     def __str__(self):
         return f"{self.title} - {self.created_at}"
@@ -62,8 +62,8 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["created_at"]
-        get_latest_by = "created_at"
+        ordering = ["-created_at"]
+        get_latest_by = "-created_at"
 
     def __str__(self):
         return f"Comment by {self.creator} ({self.created_at})"
