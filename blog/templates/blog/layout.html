@@ -27,11 +27,14 @@
                     <hr>
                     {%if user.is_authenticated%}
                     <li>Hello, {{user.username}}.</li>
-                    <li><a href="#">Logout</a></li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <li><button type="submit">Log Out</button></li>
+                    </form>
                     {%else%}
                     <li>Hi there!</li>
                     <li><a href="#">Register</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
                     {%endif%}
                 </ul>
                 {%endblock%}
