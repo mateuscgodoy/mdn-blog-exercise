@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .forms import CreateUserForm, CreateBlogForm
 from .models import Blog, Author
@@ -59,6 +59,10 @@ class BlogListView(ListView):
     model = Blog
     context_object_name = "blogs"
     template_name = "blog/blogs.html"
+
+
+class BlogDetailView(DetailView):
+    model = Blog
 
 
 class AuthorListView(ListView):

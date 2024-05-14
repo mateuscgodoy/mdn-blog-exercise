@@ -9,4 +9,5 @@ urlpatterns = [
     path("new/", views.BlogCreate.as_view(), name="new"),
     path("blogs/", views.BlogListView.as_view(), name="blogs"),
     path("authors/", views.AuthorListView.as_view(), name="authors"),
+    path("blog/<uuid:pk>", views.BlogDetailView.as_view(), name="blog-detail"),
 ]
