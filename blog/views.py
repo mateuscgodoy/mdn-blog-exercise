@@ -57,4 +57,5 @@ class BlogCreate(CreateView):
 
 class BlogListView(ListView):
     model = Blog
+    context_object_name = "blogs"
     template_name = "blog/blogs.html"
