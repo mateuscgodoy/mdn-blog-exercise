@@ -1,0 +1,21 @@
+{% extends "blog/layout.html" %}
+
+{%block title%}
+Blogs
+{%endblock%}
+
+{%block content%}
+
+<div class="container d-flex flex-column gap-4">
+    <h1>Blogs</h1>
+    {%for blog in blogs%}
+    <div class="card">
+        <h2 class="card-header fs-4">{{blog.title}}</h2>
+        <div class="card-body">
+            <p class="text-muted">Written by {{blog.author}}, on {{blog.created_at}}</p>
+            <a href="{{blog.get_absolute_url}}">Read more</a>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{%endblock%}

@@ -1,0 +1,23 @@
+{%extends "blog/layout.html"%}
+
+{%block title%}
+Blog
+{%endblock%}
+
+{%block content%}
+<div class="container">
+    <div class="container">
+        <h1>{{blog.title}}</h1>
+        <p class="text-muted">Written by {{blog.author}}, on {{blog.created_at}}</p>
+    </div>
+    <div class="container">
+        <p>{{blog.content}}</p>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <h3>Comment Section</h3>
+    <p class="text-muted"><em>Please remember to be polite and respectful.</em></p>
+    <h6>Future comment section.</h6>
+</div>
+{%endblock%}

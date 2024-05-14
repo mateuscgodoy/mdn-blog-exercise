@@ -22,11 +22,12 @@
                 {%block sidebar%}
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'blog:index' %}">Home</a></li>
-                    <li><a href="#">Blogs</a></li>
-                    <li><a href="#">Authors</a></li>
+                    <li><a href="{%url 'blog:blogs'%}">Blogs</a></li>
+                    <li><a href="{%url 'blog:authors'%}">Authors</a></li>
                     <hr>
                     {%if user.is_authenticated%}
                     <li>Hello, {{user.username}}.</li>
+                    <li><a href="{%url 'blog:new'%}">New Blog</a></li>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <li><button type="submit">Log Out</button></li>

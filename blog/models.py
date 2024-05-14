@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 
 class User(AbstractUser):
@@ -25,6 +26,9 @@ class Author(models.Model):
     class Meta:
         ordering = ["writes_since", "user"]
 
+    def get_absolute_url(self):
+        return reverse("blog:author", args=[str(self.user.username)])
+
     def __str__(self):
         return str(self.user)
 
@@ -45,6 +49,9 @@ class Blog(models.Model):
     class Meta:
         ordering = ["-created_at", "title"]
         get_latest_by = "-created_at"
+
+    def get_absolute_url(self):
+        return reverse("blog:blog-detail", args=[str(self.pk)])
 
     def __str__(self):
         return f"{self.title} - {self.created_at}"
