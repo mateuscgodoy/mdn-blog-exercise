@@ -59,3 +59,9 @@ class BlogListView(ListView):
     model = Blog
     context_object_name = "blogs"
     template_name = "blog/blogs.html"
+
+
+class AuthorListView(ListView):
+    model = Author
+    context_object_name = "authors"
+    template_name = "blog/authors.html"

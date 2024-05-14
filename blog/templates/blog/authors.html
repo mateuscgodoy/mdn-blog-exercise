@@ -1,0 +1,23 @@
+{% extends "blog/layout.html" %}
+
+{%block title%}
+Authors
+{%endblock%}
+
+{%block content%}
+
+<div class="container">
+    <h1>Authors</h1>
+    <ul class="list-group">
+        {%for author in authors%}
+        <li class="mb-2">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{author.user}}</div>
+                <p class="text-muted">Writes since {{author.writes_since}}</p>
+                <p><a href="#">More info</a></p>
+            </div>
+        </li>
+        {%endfor%}
+    </ul>
+</div>
+{%endblock%}

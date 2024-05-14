@@ -23,7 +23,7 @@
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'blog:index' %}">Home</a></li>
                     <li><a href="{%url 'blog:blogs'%}">Blogs</a></li>
-                    <li><a href="#">Authors</a></li>
+                    <li><a href="{%url 'blog:authors'%}">Authors</a></li>
                     <hr>
                     {%if user.is_authenticated%}
                     <li>Hello, {{user.username}}.</li>
