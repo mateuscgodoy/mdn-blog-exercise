@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic.edit import CreateView
+from django.views.generic import ListView
 
-from .forms import CreateUserForm
+from .forms import CreateUserForm, CreateBlogForm
+from .models import Blog, Author
 
 
 def index(request: HttpRequest):
@@ -11,6 +16,7 @@ def index(request: HttpRequest):
 
 
 # For reference: https://learndjango.com/tutorials/django-login-and-logout-tutorial
+#! Not suited for this context, but good for learning
 # class RegisterView(CreateView):
 #     form_class = UserCreationForm
 #     success_url = reverse_lazy("login")
@@ -33,3 +39,22 @@ class Register(View):
             return redirect("login")
         context = {"form": form}
         return render(request, "registration/register.html", context)
+
+
+class BlogCreate(CreateView):
+    model = Blog
+    form_class = CreateBlogForm
+    template_name = "blog/new.html"
+    success_url = ""
+
+    def form_valid(self, form):
+        author, created = Author.objects.get_or_create(user=self.request.user)
+        form.instance.author = author
+        form.save()
+        #! TODO: Change it to Blog View once it's created
+        return HttpResponseRedirect(reverse("blog:index"))
+
+
+class BlogListView(ListView):
+    model = Blog
+    template_name = "blog/blogs.html"

@@ -27,6 +27,7 @@
                     <hr>
                     {%if user.is_authenticated%}
                     <li>Hello, {{user.username}}.</li>
+                    <li><a href="{%url 'blog:new'%}">New Blog</a></li>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <li><button type="submit">Log Out</button></li>
