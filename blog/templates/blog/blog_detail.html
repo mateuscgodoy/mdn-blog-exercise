@@ -8,7 +8,8 @@ Blog
 <div class="container">
     <div class="container">
         <h1>{{blog.title}}</h1>
-        <p class="text-muted">Written by {{blog.author}}, on {{blog.created_at}}</p>
+        <p class="text-muted">Written by <a href="{{blog.author.get_absolute_url}}">{{blog.author}}</a>, on
+            {{blog.created_at}}</p>
     </div>
     <div class="container">
         <p>{{blog.content}}</p>
@@ -17,7 +18,26 @@ Blog
 <hr>
 <div class="container">
     <h3>Comment Section</h3>
-    <p class="text-muted"><em>Please remember to be polite and respectful.</em></p>
-    <h6>Future comment section.</h6>
+    {%if user.is_authenticated %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" class="btn btn-success" value="Comment">
+    </form>
+    {%endif%}
+    <div class="d-flex flex-column gap-4 my-3">
+        {%for comment in blog.comment_set.all%}
+        <div class="card">
+            <div class="card-header text-muted">
+                Written by <strong>{{comment.creator}}</strong>, on {{comment.created_at}}
+            </div>
+            <div class="card-body">
+                <p>{{comment.content}}</p>
+            </div>
+        </div>
+        {%empty%}
+        <p><em>This blog has no comments yet. Be the first to comment on it!</em></p>
+        {%endfor%}
+    </div>
 </div>
 {%endblock%}
