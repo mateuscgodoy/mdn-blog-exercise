@@ -3,11 +3,13 @@ from django.http import HttpRequest
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormMixin
 from django.views.generic import ListView, DetailView
 
-from .forms import CreateUserForm, CreateBlogForm
-from .models import Blog, Author
+from .forms import CreateUserForm, CreateBlogForm, CreateCommentForm
+from .models import Blog, Author, Comment
+
+# TODO: Add all blog written by the author on the authors page
 
 
 def index(request: HttpRequest):
@@ -61,11 +63,44 @@ class BlogListView(ListView):
     template_name = "blog/blogs.html"
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(FormMixin, DetailView):
     model = Blog
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        return reverse("blog:blog-detail", kwargs={"pk": self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogDetailView, self).get_context_data(**kwargs)
+        context["form"] = CreateCommentForm(
+            initial={"blog": self.object.id, "creator": self.request.user}
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        new_comment = Comment.objects.create(
+            creator=self.request.user,
+            blog=self.get_object(),
+            content=form.cleaned_data["content"],
+        )
+        new_comment.save()
+        return super(BlogDetailView, self).form_valid(form)
 
 
 class AuthorListView(ListView):
     model = Author
     context_object_name = "authors"
     template_name = "blog/authors.html"
+
+
+class AuthorDetailView(DetailView):
+    model = Author
