@@ -1,0 +1,19 @@
+{%extends "blog/layout.html"%}
+
+{%block title%}
+{{author.user}} Page
+{%endblock%}
+
+{%block content%}
+<div class="container">
+    <div class="container">
+        <h1>{{author.user}}</h1>
+        <p class="text-muted"><em>Writes since {{author.writes_since}}</em></p>
+    </div>
+    <hr>
+    <div class="container">
+        <h2>Biography</h2>
+        <p>{{author.bio}}</p>
+    </div>
+</div>
+{%endblock%}

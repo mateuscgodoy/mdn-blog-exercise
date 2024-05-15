@@ -27,7 +27,7 @@ class Author(models.Model):
         ordering = ["writes_since", "user"]
 
     def get_absolute_url(self):
-        return reverse("blog:author", args=[str(self.user.username)])
+        return reverse("blog:author-detail", args=[str(self.pk)])
 
     def __str__(self):
         return str(self.user)

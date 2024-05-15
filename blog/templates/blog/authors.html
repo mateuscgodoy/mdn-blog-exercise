@@ -14,7 +14,7 @@ Authors
             <div class="ms-2 me-auto">
                 <div class="fw-bold">{{author.user}}</div>
                 <p class="text-muted">Writes since {{author.writes_since}}</p>
-                <p><a href="#">More info</a></p>
+                <p><a href="{{author.get_absolute_url}}">More info</a></p>
             </div>
         </li>
         {%endfor%}

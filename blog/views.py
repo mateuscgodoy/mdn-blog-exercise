@@ -69,3 +69,7 @@ class AuthorListView(ListView):
     model = Author
     context_object_name = "authors"
     template_name = "blog/authors.html"
+
+
+class AuthorDetailView(DetailView):
+    model = Author
